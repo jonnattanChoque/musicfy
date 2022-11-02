@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Albums() {
+export function Albums() {
   return (
     <div>Albums Screen</div>
   )

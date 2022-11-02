@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Artist() {
+export function Artist() {
   return (
     <div>Artist Screen</div>
   )
