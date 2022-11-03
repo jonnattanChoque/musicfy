@@ -1,0 +1,49 @@
+@import "~/src/scss/index"; 
+
+.profile {
+    padding: 40px 40px;
+
+    &__block {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 40px 0;
+        font-size: 20px;
+
+        > div {
+            display: flex;
+            align-items: center;
+        }
+
+        .ui.button {
+            margin: 0;
+            border-radius: 100px;
+            background-color: $primary-color;
+
+            &:hover {
+                background-color: $primary-color-hover;
+            }
+        }
+    }
+
+    .first_center {
+        justify-content: center;
+    }
+
+    &__info {
+        margin-top: 50px;
+
+        .profile__block {
+            margin-left: 20px !important;
+
+            > p {
+                margin-left: 20px;
+                font-size: 20px;
+
+                > span {
+                    color: $font-grey;
+                }
+            }
+        }
+    }
+}
