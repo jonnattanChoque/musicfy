@@ -1,6 +1,6 @@
 import React from 'react'
 import "./loggedLayout.scss";
-import { LeftMenu, TopBar } from '../../components/layouts';
+import { LeftMenu, TopBar, Footer } from '../../components/layouts';
 
 export function LoggedLayout(props) {
   const { children } = props;
@@ -19,7 +19,7 @@ export function LoggedLayout(props) {
         </div>
       </div>
       <div className='logged-layout__footer'>
-        <p>Footer</p>
+        <Footer />
       </div>
     </div>
   )
