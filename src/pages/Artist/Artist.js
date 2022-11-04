@@ -1,17 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import "./Artist.scss";
 import { useParams } from "react-router-dom"
-import { Artist as ArtistController, Album} from "../../api";
+import { Artist as ArtistController, Album, Song} from "../../api";
 import { BannerArtist } from '../../components/Artist';
 import { SliderCustom } from '../../components/Shared';
+import { ListSongs } from '../../components/Song';
 
 const artistController = new ArtistController();
 const albumController = new Album();
+const songController = new Song();
 
 export function Artist() {
   const {id} = useParams();
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState(null);
+  const [songs, setSongs] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -35,6 +38,30 @@ export function Artist() {
     })()
   }, [id]);
 
+  useEffect(() => {
+    if(albums) {
+      (async () => {
+        try {
+          let data = [];
+          for await (const album of albums) {
+            const response = await songController.getSongsByAlbum(album.id);
+            const dataTemp = response.map((song) => {
+              return {
+                ...song,
+                albumName: album.name,
+              }
+            });
+            data.push(...dataTemp);
+          }
+          setSongs(data);
+          
+        } catch (error) {
+          alert(error);
+        }
+      })()
+    }
+  }, [albums]);
+
   if (!artist) return null;
 
   return (
@@ -47,7 +74,8 @@ export function Artist() {
       </div>
       
       <div className='artist-page__slider'>
-        <h2>canciones</h2>
+        <h2>Canciones</h2>
+        <ListSongs songs={songs} />
       </div>
     </div>
   )

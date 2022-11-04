@@ -5,6 +5,7 @@ import {Modal} from '../../Shared';
 import {NewArtistForm} from '../../Artist';
 import { Link, useLocation } from 'react-router-dom';
 import { NewAlbumForm } from '../../Albums';
+import { NewSongForm } from '../../Song/';
 
 export function LeftMenu() {
     const {pathname} = useLocation();
@@ -36,7 +37,7 @@ export function LeftMenu() {
             break;
           case "song":
             setTitleModal("Nueva canción");
-            setContentModal(<NewArtistForm onClose={onCloseModal} />);
+            setContentModal(<NewSongForm onClose={onCloseModal} />);
             setShowModal(true);
             break;
           default:
@@ -64,14 +65,14 @@ export function LeftMenu() {
             </Menu>
 
             <Menu secondary vertical fluid>
-                <Menu.Item link onClick={() => onShowModal('song')}> 
-                    <Icon name='plus' /> Nueva canción 
-                </Menu.Item>
-                <Menu.Item link onClick={() => onShowModal('album')}> 
-                    <Icon name='plus' /> Crear album 
-                </Menu.Item>
                 <Menu.Item link onClick={() => onShowModal('artist')}> 
                     <Icon name='plus' /> Nuev artista 
+                </Menu.Item>
+                <Menu.Item link onClick={() => onShowModal('album')}> 
+                    <Icon name='plus' /> Nuevo album 
+                </Menu.Item>
+                <Menu.Item link onClick={() => onShowModal('song')}> 
+                    <Icon name='plus' /> Nueva canción 
                 </Menu.Item>
             </Menu>
         </div>

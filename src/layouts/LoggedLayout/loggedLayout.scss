@@ -18,6 +18,7 @@ $menuWidth: 300px;
     }
 
     &__children-content {
+        overflow: scroll;
         width: calc(100% - $menuWidth);
         &::-webkit-scrollbar {
             display: none;

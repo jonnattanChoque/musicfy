@@ -29,7 +29,6 @@ export function NewAlbumForm(props) {
                 }
             })
             setArtists(newData);
-            console.log(artists);
         })()
     }, [])
 
