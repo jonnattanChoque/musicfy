@@ -1,52 +1,28 @@
-import { errorHandler } from "./errohandler";
 import { v4 as uuidv4 } from "uuid";
-import { setDoc, doc, collection, getDocs, getDoc, limit, orderBy, query } from "firebase/firestore";
-import { db } from "../utils";
+import { Main } from "./main";
 
-export class Artist {
-    collectionName = "artists";
+export class Artist extends Main {
+    
+    constructor() {
+        super();
+        this.collectionName = "artists";
+    }
 
     async getArtists() {
-        try {
-            const querySnapshot = await getDocs(collection(db, this.collectionName));
-            return querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getCollections();
     }
 
     async getArtist(id) {
-        try {
-            const docRef = doc(db, this.collectionName, id);
-            const snapshot = await getDoc(docRef);
-            return snapshot.data();
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getCollection(id);
     }
 
     async createArtist(name, image) {
-        try {
-            const idArtist = uuidv4();
-            const created_at = new Date();
-            const data = {id: idArtist, image, name, created_at};
-            const ref = doc(db, this.collectionName, idArtist);
-            await setDoc(ref, data);
-        } catch (error) {
-            errorHandler(error);
-        }
+        const idArtist = uuidv4();
+        const data = {id: idArtist, image, name};
+        return await this.createCollection(idArtist, data);
     }
 
     async getLastArtist(limitItems= 20) {
-        try {
-            const collectionRef = collection(db, this.collectionName);
-            const limitRef = limit(limitItems);
-            const orderByRef = orderBy("created_at", "desc");
-            const queryRef = query(collectionRef, orderByRef, limitRef);
-            const querySnapshot = await getDocs(queryRef);
-            return querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getLastCollections(limitItems);
     }
 }

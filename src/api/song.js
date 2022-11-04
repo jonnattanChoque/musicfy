@@ -2,62 +2,34 @@ import { errorHandler } from "./errohandler";
 import { v4 as uuidv4 } from "uuid";
 import { setDoc, doc, collection, getDocs, getDoc, where, query, limit, orderBy } from "firebase/firestore";
 import { db } from "../utils";
+import { Main } from "./main";
 
-export class Song {
-    collectionName = "songs";
+export class Song extends Main {
+    
+    constructor() {
+        super();
+        this.collectionName = "songs";
+    }
 
     async getSongs() {
-        try {
-            const querySnapshot = await getDocs(collection(db, this.collectionName));
-            return querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getCollections();
     }
 
     async getSong(id) {
-        try {
-            const docRef = doc(db, this.collectionName, id);
-            const snapshot = await getDoc(docRef);
-            return snapshot.data();
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getCollection(id);
     }
 
     async createSong(name, file, album) {
-        try {
-            const idSong = uuidv4();
-            const created_at = new Date();
-            const data = {id: idSong, file, name, created_at, album};
-            const ref = doc(db, this.collectionName, idSong);
-            await setDoc(ref, data);
-        } catch (error) {
-            errorHandler(error);
-        }
+        const idSong = uuidv4();
+        const data = {id: idSong, file, name, album};
+        return await this.createCollection(idSong, data);
     }
 
     async getSongsByAlbum(album) {
-        try {
-            const whereRef = where("album", "==", album);
-            const queryRef = query(collection(db, this.collectionName), whereRef);
-            const querySnapshot = await getDocs(queryRef);
-            return querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getCollectionByItem("album", album);
     }
 
     async getLastSongs(limitItems= 20) {
-        try {
-            const collectionRef = collection(db, this.collectionName);
-            const limitRef = limit(limitItems);
-            const orderByRef = orderBy("created_at", "desc");
-            const queryRef = query(collectionRef, orderByRef, limitRef);
-            const querySnapshot = await getDocs(queryRef);
-            return querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            errorHandler(error);
-        }
+        return await this.getLastCollections(limitItems);
     }
 }

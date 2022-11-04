@@ -1,7 +1,6 @@
 import { FirebaseError } from "@firebase/util";
 
 export function errorHandler(error) {
-    console.log(error.code);
     var result = "";
     if (error instanceof FirebaseError) {
         switch (error.code) {
