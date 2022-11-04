@@ -6,7 +6,7 @@ export function ListSongs(props) {
     const {songs} = props;
 
     if(!songs || songs.length === 0) {
-        return <p className='no-songs'>Este album no tiene canciones</p>
+        return <p className='no-songs'>No hay canciones</p>
     }
 
     return (

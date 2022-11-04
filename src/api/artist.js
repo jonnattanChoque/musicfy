@@ -1,6 +1,6 @@
 import { errorHandler } from "./errohandler";
 import { v4 as uuidv4 } from "uuid";
-import { setDoc, doc, collection, getDocs, getDoc } from "firebase/firestore";
+import { setDoc, doc, collection, getDocs, getDoc, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../utils";
 
 export class Artist {
@@ -32,6 +32,19 @@ export class Artist {
             const data = {id: idArtist, image, name, created_at};
             const ref = doc(db, this.collectionName, idArtist);
             await setDoc(ref, data);
+        } catch (error) {
+            errorHandler(error);
+        }
+    }
+
+    async getLastArtist(limitItems= 20) {
+        try {
+            const collectionRef = collection(db, this.collectionName);
+            const limitRef = limit(limitItems);
+            const orderByRef = orderBy("created_at", "desc");
+            const queryRef = query(collectionRef, orderByRef, limitRef);
+            const querySnapshot = await getDocs(queryRef);
+            return querySnapshot.docs.map(doc => doc.data());
         } catch (error) {
             errorHandler(error);
         }

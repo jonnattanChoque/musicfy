@@ -1,6 +1,6 @@
 import { errorHandler } from "./errohandler";
 import { v4 as uuidv4 } from "uuid";
-import { setDoc, doc, collection, getDocs, getDoc, where, query } from "firebase/firestore";
+import { setDoc, doc, collection, getDocs, getDoc, where, query, limit, orderBy } from "firebase/firestore";
 import { db } from "../utils";
 
 export class Song {
@@ -41,6 +41,19 @@ export class Song {
         try {
             const whereRef = where("album", "==", album);
             const queryRef = query(collection(db, this.collectionName), whereRef);
+            const querySnapshot = await getDocs(queryRef);
+            return querySnapshot.docs.map(doc => doc.data());
+        } catch (error) {
+            errorHandler(error);
+        }
+    }
+
+    async getLastSongs(limitItems= 20) {
+        try {
+            const collectionRef = collection(db, this.collectionName);
+            const limitRef = limit(limitItems);
+            const orderByRef = orderBy("created_at", "desc");
+            const queryRef = query(collectionRef, orderByRef, limitRef);
             const querySnapshot = await getDocs(queryRef);
             return querySnapshot.docs.map(doc => doc.data());
         } catch (error) {
