@@ -1,16 +1,55 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./LeftMenu.scss";
 import { Menu, Icon } from 'semantic-ui-react';
+import {Modal} from '../../Shared';
+import {NewArtistForm} from '../../Artist';
 import { Link, useLocation } from 'react-router-dom';
+import { NewAlbumForm } from '../../Albums';
 
 export function LeftMenu() {
     const {pathname} = useLocation();
+    const [showModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState("");
+    const [contentModal, setContentModal] = useState(null);
+
+    const onCloseModal = () => {
+        setShowModal(false);
+        setTitleModal("");
+        setContentModal(null);
+    };
 
     const isCurrentPage = (path) => {
         return path === pathname;
     }
 
+    const onShowModal = (type) => {
+        switch (type) {
+          case "artist":
+            setTitleModal("Nuevo artista");
+            setContentModal(<NewArtistForm onClose={onCloseModal} />);
+            setShowModal(true);
+            break;
+          case "album":
+            setTitleModal("Nuevo album");
+            setContentModal(<NewAlbumForm onClose={onCloseModal} />);
+            setShowModal(true);
+            break;
+          case "song":
+            setTitleModal("Nueva canción");
+            setContentModal(<NewArtistForm onClose={onCloseModal} />);
+            setShowModal(true);
+            break;
+          default:
+            setTitleModal("");
+            setContentModal(null);
+            setShowModal(false);
+            break;
+        }
+        
+      }
+
     return (
+        <>
         <div className='left-menu'>
             <Menu secondary vertical fluid>
                 <Menu.Item as={Link} to="/" active={isCurrentPage("/")}> 
@@ -25,16 +64,18 @@ export function LeftMenu() {
             </Menu>
 
             <Menu secondary vertical fluid>
-                <Menu.Item link onClick={() => console.log('nueva cancion')}> 
+                <Menu.Item link onClick={() => onShowModal('song')}> 
                     <Icon name='plus' /> Nueva canción 
                 </Menu.Item>
-                <Menu.Item link onClick={() => console.log('nuevo album')}> 
+                <Menu.Item link onClick={() => onShowModal('album')}> 
                     <Icon name='plus' /> Crear album 
                 </Menu.Item>
-                <Menu.Item link onClick={() => console.log('nuevo artista')}> 
+                <Menu.Item link onClick={() => onShowModal('artist')}> 
                     <Icon name='plus' /> Nuev artista 
                 </Menu.Item>
             </Menu>
         </div>
+        <Modal show={showModal} setShow={onCloseModal} title={titleModal} children={contentModal} />
+        </>
     )
 }
