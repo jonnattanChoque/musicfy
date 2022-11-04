@@ -11,9 +11,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1500,
     height: 1000,
-    title: "Musicfy",
-    // titleBarStyle: "hiddenInset",
+    title: "Musicfy Version 1.0.0",
+    titleBarStyle: "hiddenInset",
     // resizable: false,
+    // kiosk: true, // Fullscreen
   });
   mainWindow.loadURL(
     isDev

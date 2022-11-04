@@ -10,7 +10,6 @@ export function Player() {
     const [currentSeconds, setCurrentSeconds] = useState(0)
 
     const onProgressSong = (data) => {
-        console.log(data);
         setTotalSeconds(data.loadedSeconds);
         setCurrentSeconds(data.playedSeconds);
     }
