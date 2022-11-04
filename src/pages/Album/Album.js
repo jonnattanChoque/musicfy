@@ -43,7 +43,7 @@ export function Album() {
       
       <div className='album-page__slider'>
         <h2>Canciones</h2>
-        <ListSongs songs={songs} />
+        <ListSongs songs={songs} miniature={album.image} />
       </div>
     </div>
   )

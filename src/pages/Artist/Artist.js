@@ -49,6 +49,7 @@ export function Artist() {
               return {
                 ...song,
                 albumName: album.name,
+                albumImage: album.image
               }
             });
             data.push(...dataTemp);

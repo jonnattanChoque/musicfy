@@ -1,9 +1,11 @@
 import React from 'react';
 import { Icon, Table } from 'semantic-ui-react';
 import "./ListSongs.scss";
+import { usePlayer } from "../../../hooks";
 
 export function ListSongs(props) {
-    const {songs} = props;
+    const {songs, miniature} = props;
+    const { playSong } = usePlayer();
 
     if(!songs || songs.length === 0) {
         return <p className='no-songs'>No hay canciones</p>
@@ -19,7 +21,7 @@ export function ListSongs(props) {
             </Table.Header>
             <Table.Body>
                 {songs.map((song, index) => (
-                    <Table.Row key={index}>
+                    <Table.Row key={index} onClick={() => playSong(song, miniature || song.albumImage)}>
                         <Table.Cell collapsing>
                             <Icon name='play circle outline' />
                         </Table.Cell>
