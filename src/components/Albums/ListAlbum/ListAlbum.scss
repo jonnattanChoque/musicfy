@@ -1,6 +1,6 @@
 
-.list-artists {
-    &__artist {
+.list-albums {
+    &__album {
         margin-top: 30px !important;
 
         &:hover {
@@ -13,7 +13,6 @@
             height: 120px;
             background-position: center;
             background-size: cover;
-            border-radius: 50%;
             margin: 0 auto;
         }
 

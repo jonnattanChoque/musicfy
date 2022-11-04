@@ -2,8 +2,8 @@
     .field {
         .input {
             input {
-                background-color: $background-secondary;
-                border-color: $background-secondary;
+                background-color: $background-secondary !important;
+                border-color: $background-secondary !important;
                 color: $font-light;
 
                 &:focus, &:hover, &:active {
@@ -12,6 +12,42 @@
             }
             i {
                 color: $font-light;
+            }
+        }
+
+        .dropdown {
+            background-color: $background-secondary;
+            border-color: $border-primary;
+            color: $font-light;
+
+            &:focus, &:hover, &:active {
+                .menu {
+                    background-color: $background-secondary;
+                }
+            }
+
+            input {
+                background-color: $background-secondary;
+                border-color: $border-primary;
+                color: $font-light;
+
+                &:focus, &:hover, &:active {
+                    background-color: $background-secondary;
+                }
+            }
+
+            .menu {
+                background-color: $background-secondary;
+                border-color: $border-primary;
+
+                .item {
+                    border-color: $border-primary;
+                }
+
+                .message {
+                    color: $font-light;
+                    opacity: 0.8;
+                }
             }
         }
     }
@@ -30,6 +66,13 @@
                 color: $danger;
             }
             i {
+                color: $danger;
+            }
+        }
+
+        .ui.dropdown {
+            .text {
+                background-color: transparent;
                 color: $danger;
             }
         }
